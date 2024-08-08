@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 import numpy as np
 import matplotlib.pyplot as plt
 import mplcursors
@@ -56,12 +53,18 @@ import streamlit as st
 
 # ******************* Data Loading **************************************
 # df = pd.read_excel("CM_Elgin.xlsx")
-df_CM = pd.read_csv("CM_ElginFC.csv",encoding='ISO-8859-1')
-df_CB = pd.read_csv("CB_ElginFC.csv")
-df_Wing = pd.read_csv("Wing_ElginFC.csv",encoding='ISO-8859-1')
-df_CF=pd.read_csv("CF_ElginFC.csv",encoding='ISO-8859-1')
-df_GK=pd.read_csv("GK_ElginFC.csv",encoding='ISO-8859-1')
-df_FB=pd.read_csv("FB_ElginFC.csv",encoding='ISO-8859-1')
+df_CM = pd.read_excel('CrystalP.xlsx', sheet_name='CM')
+df_CM.to_csv('CM_Target.csv', index=False)
+df_CB = pd.read_excel('CrystalP.xlsx', sheet_name='CB')
+df_CB.to_csv('CB_Target.csv', index=False)
+df_Wing = pd.read_excel('CrystalP.xlsx', sheet_name='Wing')
+df_Wing.to_csv('Wing_Target.csv', index=False)
+df_CF=pd.read_excel('CrystalP.xlsx', sheet_name='CF')
+df_CF.to_csv('CF_Target.csv', index=False)
+df_GK=pd.read_excel('CrystalP.xlsx', sheet_name='GK')
+df_GK.to_csv('GK_Target.csv', index=False)
+df_FB=pd.read_excel('CrystalP.xlsx', sheet_name='FB')
+df_FB.to_csv('FB_Target.csv', index=False)
 
 pvt_df_CM = pd.DataFrame(df_CM).set_index('Player')
 pvt_df_CB = pd.DataFrame(df_CB).set_index('Player')
@@ -1976,6 +1979,3 @@ elif position == 'CAM':
 # st.subheader('Radar Chart for Selected Player and League Average')
 # # Create radar chart for selected player
 # create_radar_chart(pivot_df, [players, 'League Two Average'], id_column='Player', title=f'Radar Chart for {players} and League Average')
-
-
-
