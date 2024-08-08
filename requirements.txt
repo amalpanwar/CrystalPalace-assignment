@@ -18,4 +18,4 @@ faiss-cpu
 scipy
 seaborn
 langchain-ai21
-distutils
+
