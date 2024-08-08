@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import distutils
+import distutils.core
 import mplcursors
 import seaborn as sns
 from scipy.stats import norm
