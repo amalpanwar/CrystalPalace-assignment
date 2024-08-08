@@ -78,239 +78,6 @@ pvt_df_FB = pd.DataFrame(df_FB).set_index('Player')
 # Pivot the dataframe
 # pivot_df = df.pivot(index='Player', columns='Attribute', values='Value')
 
-
-# def create_radar_chart(df, players, id_column, title=None, max_values=None, padding=1.25):
-#     df_selected = df.loc[players]
-#     categories = df_selected.columns.tolist()
-#     data = df_selected.to_dict(orient='list')
-#     ids = df_selected.index.tolist()
-    
-#     # Check and handle zero division or NaNs in max_values
-#     if max_values is None:
-#         max_values = {key: padding * max(value) for key, value in data.items()}
-#     else:
-#         for key, max_val in max_values.items():
-#             if max_val == 0 or np.isnan(max_val):
-#                 max_values[key] = padding * max(data[key])
-                
-#     # Normalize the data
-#     normalized_data = {}
-#     for key, value in data.items():
-#         if max_values[key] != 0:  # Avoid division by zero
-#             normalized_data[key] = np.array(value) / max_values[key]
-#         else:
-#             normalized_data[key] = np.zeros(len(value))  # Handle zero division case
-    
-#     num_vars = len(data.keys())
-#     ticks = list(data.keys())
-#     ticks += ticks[:1]
-#     angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist() + [0]
-    
-#     # Plotting radar chart
-#     fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
-#     fig.patch.set_facecolor('black')  # Set figure background to black
-#     ax.set_facecolor('grey') 
-#     for i, model_name in enumerate(ids):
-#         values = [normalized_data[key][i] for key in data.keys()]
-#         actual_values = [data[key][i] for key in data.keys()]
-#         values += values[:1]  # Close the plot for a better look
-#         ax.plot(angles, values, label=model_name)
-#         ax.fill(angles, values, alpha=0.15)
-#         for angle, value, actual_value in zip(angles, values, actual_values):
-#             ax.text(angle, value, f'{actual_value:.1f}', ha='center', va='bottom', fontsize=10, color='black')
-            
-#     ax.fill(angles, np.ones(num_vars + 1), alpha=0.05)
-    
-#     ax.set_yticklabels([])
-#     ax.set_xticks(angles)
-#     ax.set_xticklabels(ticks, color='white',fontsize=10)
-#     ax.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1), facecolor='black', edgecolor='white', labelcolor='white')
-
-#     if title is not None:
-#         plt.suptitle(title,color='white',fontsize=14)
-    
-#     return fig
-
-# Custom CSS to adjust the sidebar size
-st.markdown(
-    """
-    <style>
-    .css-1d391kg {
-        width: 200px;  /* Adjust the width of the sidebar */
-    }
-    .css-1d391kg .css-e1fqkh5 {
-        width: 800px;  /* Adjust the width of the inner content */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-    )
-
-# def create_radar_chart(df, players,id_column, title=None, padding=1.15):
-#     # Ensure the players list is indexing correctly
-#     df_selected = df.loc[players]
-#     categories = df_selected.columns.tolist()
-#     N = len(categories)
-    
-#     # Convert all data to numeric, coercing errors and filling NaNs with zeros
-#     df_selected = df_selected.apply(pd.to_numeric, errors='coerce').fillna(0)
-    
-#     data = df_selected.to_dict(orient='list')
-#     ids = df_selected.index.tolist()
-
-#     max_values = {}
-#     for key, value in data.items():
-#         max_values[key] = padding * max(value) if max(value) != 0 else 1  # Avoid zero division
-
-#     # Normalize the data
-#     normalized_data = {}
-#     for key, value in data.items():
-#         normalized_data[key] = np.array(value) / max_values[key]
-
-#     # Create radar chart
-#     fig = go.Figure()
-
-#     for i, model_name in enumerate(ids):
-#         values = [normalized_data[key][i] for key in data.keys()]
-#         actual_values = [data[key][i] for key in data.keys()]
-#         values += values[:1]  # Close the plot for a better look
-#         actual_values += actual_values[:1]
-#         angles = [n / float(N) * 2 * np.pi for n in range(N)]
-#         angles += angles[:1]  # Complete the circle
-
-#         fig.add_trace(go.Scatterpolar(
-#             r=values,
-#             theta=[categories[j] for j in range(len(categories))] + [categories[0]],
-#             mode='lines+markers',
-#             name=model_name,
-#             hovertemplate='<b>%{theta}</b>: %{r:.1f}<extra></extra>'
-#         ))
-
-#     fig.update_layout(
-#         polar=dict(
-#             radialaxis=dict(visible=True),
-#             angularaxis=dict(ticks=''),
-#         ),
-#         showlegend=True,
-#         title='Radar Chart'
-#     )
-
-#     return fig
-
-
-# def create_radar_chart(df, players, id_column, title=None, padding=1.15):
-#     # Ensure the players list is indexing correctly
-#     df_selected = df.loc[players]
-#     categories = df_selected.columns.tolist()
-#     N = len(categories)
-    
-#     # Convert all data to numeric, coercing errors and filling NaNs with zeros
-#     df_selected = df_selected.apply(pd.to_numeric, errors='coerce').fillna(0)
-    
-#     data = df_selected.to_dict(orient='list')
-#     ids = df_selected.index.tolist()
-
-#     max_values = {}
-#     for key, value in data.items():
-#         if any(pd.isna(value)):
-#             data[key] = [0 if pd.isna(v) else v for v in value]
-#         max_values[key] = padding * max(value) if max(value) != 0 else 1  # Avoid zero division
-
-#     # Normalize the data
-#     normalized_data = {}
-#     for key, value in data.items():
-#         normalized_data[key] = np.array(value) / max_values[key]
-
-#     angles = [n / float(N) * 2 * np.pi for n in range(N)]
-#     angles += angles[:1]  # Complete the circle
-
-#     # Plotting radar chart
-#     fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
-#     fig.patch.set_facecolor('black')  # Set figure background to black
-#     ax.set_facecolor('white')
-#     subplot_df_dict[ax] = df_selected
-#     # lines = []
-#     for i, model_name in enumerate(ids):
-#         values = [normalized_data[key][i] for key in data.keys()]
-#         actual_values = [data[key][i] for key in data.keys()]
-#         values += values[:1]  # Close the plot for a better look
-#         angles_with_end = angles
-#         line, = ax.plot(angles_with_end, values, label=model_name)
-#         # ax.plot(angles, values, label=model_name)
-#         ax.fill(angles_with_end, values, alpha=0.15)
-#         # lines.append((line, model_name, actual_values))
-#         # def get_tooltip_text(index):
-#         #     player = ids[index]
-#         #     values_text = ', '.join([f'{cat}: {val:.1f}' for cat, val in zip(categories, actual_values)])
-#         #     return f'{player}\n{values_text}'
-
-#         # # Use show_hover_panel for tooltips
-#         # cursor = show_hover_panel(df_selected, get_text_func=get_tooltip_text)
-#         # cursor.connect("add", lambda sel: sel.annotation.set_text(get_tooltip_text(sel.index)))
-#         # for angle, value, actual_value in zip(angles, values, actual_values):
-#         #     ax.text(angle, value, f'{actual_value:.1f}', ha='center', va='bottom', fontsize=10, color='black')
-
-#     ax.fill(angles, np.ones(N + 1), alpha=0.05)
-
-#     ax.set_theta_offset(np.pi/2)
-#     ax.set_theta_direction(-1)
-    
-#     ticks = categories
-#     ticks += ticks[:1]  # Add the first category to the end to close the circle
-#     ax.set_xticks(angles)
-#     ax.set_xticklabels(ticks, color='white', fontsize=10)
-
-#     for label, angle_rad in zip(ax.get_xticklabels(), angles):
-#         if angle_rad <= pi/2:
-#             ha = 'left'
-#             va = "bottom"
-#             angle_text = angle_rad * (-180 / pi) + 90
-#         elif pi/2 < angle_rad <= pi:
-#             ha = 'left'
-#             va = "top"
-#             angle_text = angle_rad * (-180 / pi) + 90
-#         elif pi < angle_rad <= (3 * pi / 2):
-#             ha = 'right'
-#             va = "top"
-#             angle_text = angle_rad * (-180 / pi) - 90
-#         else:
-#             ha = 'right'
-#             va = "bottom"
-#             angle_text = angle_rad * (-180 / pi) - 90
-#         label.set_rotation(angle_text)
-#         label.set_verticalalignment(va)
-#         label.set_horizontalalignment(ha)
-#         label.set_color('white') 
-
-#     # Add tooltips
-#     # def hover_annotation(sel):
-#     #     line, player_name, actual_values = lines[sel.index]
-#     #     angle_idx = np.argmin(np.abs(np.array(angles) - sel.artist.get_data()[0][sel.index]))
-#     #     value = actual_values[angle_idx]
-#     #     sel.annotation.set_text(f'{player_name}\n{categories[angle_idx]}: {value:.1f}')
-    
-#     # cursor = mplcursors.cursor([line for line, _, _ in lines], hover=True)
-#     # cursor.connect("add", hover_annotation)
-
-#     # Draw y-labels
-#     # ax.set_rlabel_position(0)
-#     ax.legend(loc='upper right', bbox_to_anchor=(0.05, 0.05), facecolor='white', edgecolor='black', labelcolor='black')
-#     show_hover_panel(show_annotation)
-
-#     if title is not None:
-#         plt.suptitle(title, color='white', fontsize=14)
-
-#     # def hover_annotation(sel):
-#     #     index = sel.index
-#     #     angle_idx = int(index % len(angles))  # Determine the index of the angle
-#     #     player_name = lines[index][1]
-#     #     actual_value = lines[index][2][angle_idx]
-#     #     sel.annotation.set_text(f'{player_name}\n{ticks[angle_idx]}: {actual_value:.1f}')
-    
-#     # cursor = mplcursors.cursor([line for line, _, _ in lines], hover=True)
-#     # cursor.connect("add", hover_annotation)
-#     return fig
-# @st.cache_data
 def create_radar_chart(df, players, id_column, title=None, max_values=None, padding=1.25):
     df_selected = df.loc[players]
     categories = df_selected.columns.tolist()
@@ -558,7 +325,7 @@ if position == 'CM':
 
     # Create radar chart for selected players
     # st.write(f"Hover Text: {hovertext}")
-    df_position2=df_filtered.drop(columns=['CM Score(0-100)', 'CM zscore','Player Rank','Age','Team', 'Matches played','Contract Expiry \n(Trnsfmkt)', 'Minutes played'])
+    df_position2=df_filtered.drop(columns=['CM Score(0-100)', 'CM zscore','Player Rank','Age','Team', 'Matches played', 'Minutes played'])
                               
     radar_fig =create_radar_chart(df_position2, players_CM, id_column='Player', title=f'Radar Chart for Selected {position} Players and League Average')
     
@@ -749,7 +516,7 @@ elif position == 'CB':
   
 
     # Create radar chart for selected players
-    df_position2=df_filtered.drop(columns=[ 'defensive zscore','Defender Score(0-100)','Player Rank','Team','Contract Expiry \n(Trnsfmkt)','Age',
+    df_position2=df_filtered.drop(columns=[ 'defensive zscore','Defender Score(0-100)','Player Rank','Team','Age',
                         'Matches played\n(23/24)','Minutes played'])
                               
     radar_fig =create_radar_chart(df_position2, players_CB, id_column='Player', title=f'Radar Chart for Selected {position} Players and League Average')
@@ -950,7 +717,7 @@ elif position == 'Winger':
 
    
     # Create radar chart for selected players
-    df_position2=df_filtered.drop(columns=[ 'Contract Expiry \n(Trnsfmkt)', 'Age', 'Matches played','Team',
+    df_position2=df_filtered.drop(columns=[ 'Age', 'Matches played','Team',
        'Minutes played', 'wing zscore','wing Score(0-100)', 'Player Rank'])
                               
     radar_fig =create_radar_chart(df_position2, players_Wing, id_column='Player', title=f'Radar Chart for Selected {position} Players and League Average')
@@ -1199,7 +966,7 @@ elif position == 'CF':
     
 
     # Create radar chart for selected players
-    df_position2=df_filtered.drop(columns=[ 'Team','Contract Expiry \n(Trnsfmkt)',
+    df_position2=df_filtered.drop(columns=[ 'Team',
                         'Matches played', 'Minutes played','Age',
                        'CF Score(0-100)', 'Player Rank', 'CF zscore'])
                               
@@ -1404,7 +1171,7 @@ elif position == 'GK':
     
 
     # Create radar chart for selected players
-    df_position2=df_filtered.drop(columns=[ 'Team','Contract Expiry \n(Trnsfmkt)',
+    df_position2=df_filtered.drop(columns=[ 'Team',
                         'Matches played', 'Minutes played','Age',
                        'GK Score(0-100)', 'Player Rank', 'GK zscore'])
                               
@@ -1640,7 +1407,7 @@ elif position == 'FB':
   
 
     # Create radar chart for selected players
-    df_position2=df_filtered2.drop(columns=[ 'FB zscore','FB Score(0-100)','Player Rank','Team','Contract Expiry \n(Trnsfmkt)','Age',
+    df_position2=df_filtered2.drop(columns=[ 'FB zscore','FB Score(0-100)','Player Rank','Team','Age',
                         'Matches played','Minutes played'])
                               
     radar_fig =create_radar_chart(df_position2.set_index('Player'), players_FB, id_column='Player', title=f'Radar Chart for Selected {position} Players and League Average')
