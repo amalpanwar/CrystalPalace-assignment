@@ -18,5 +18,4 @@ faiss-cpu
 scipy
 seaborn
 langchain-ai21
-mplcursors
 distutils
