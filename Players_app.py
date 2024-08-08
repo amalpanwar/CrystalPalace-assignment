@@ -233,18 +233,8 @@ api_token = st.sidebar.text_input('API Key', type='password')
 st.title('Player Performance Dashboard')
 
 default_position_index = ["GK","FB","CB","CM","CAM","Winger","CF"].index('CM')
-position = st.sidebar.selectbox('Select position:', options=["GK","FB","CB","CM","CAM","Winger","CF"],index=default_position_index)
+position = st.sidebar.selectbox('Select position:', options=["GK","FB","CB","CM","Winger","CF"],index=default_position_index)
 
-# Initialize df_position and default player list
-# Initialize df_position and default player list
-# df_position = None
-
-# Determine the dataframe to use based on selected position
-# if position == 'CM':
-#     df_position = pivot_df
-# elif position == 'CB':
-#     df_position_CB = pvt_df_CB
-# # Add other positions here with elif statements
 
 # Ensure df_position is selected
 if position == 'CM':
@@ -281,12 +271,6 @@ if position == 'CM':
     df_position["CM Score(0-100)"] = (norm.cdf(df_position["CM zscore"]) * 100).round(2)
     df_position['Player Rank'] = df_position['CM Score(0-100)'].rank(ascending=False)
 
-    # df_position["defensive zscore"] = np.dot(df_position[original_metrics], weights)
-    # original_mean = df_position["defensive zscore"].mean()
-    # original_std = df_position["defensive zscore"].std()
-    # df_position["defensive zscore"] = (df_position["defensive zscore"] - original_mean) / original_std
-    # df_position["Defender Score(0-100)"] = (norm.cdf(df_position["defensive zscore"]) * 100).round(2)
-    # df_position['Player Rank'] = df_position['Defender Score(0-100)'].rank(ascending=False)
     # Dropdown menu for player selection based on position
     if st.sidebar.button('Show Top 5 Players'):
         top_5_players = df_position.nsmallest(5, 'Player Rank').index.tolist()
@@ -298,11 +282,7 @@ if position == 'CM':
 
     # players_CB = st.sidebar.multiselect('Select players:', options=df_position.index.tolist(), default=['League Two Average'])
     df_filtered = df_position.loc[players_CM]
-    # Dropdown menu for player selection based on position
-    # players_CM = st.sidebar.multiselect('Select players:', options=df_position.index.tolist(), default=['League Two Average'])
-    # df_filtered = df_position.loc[players_CM]
-    # Create point facet graph
-    # Create point facet graph
+   
     
     
     fig = px.scatter(df_filtered.reset_index(), x='Passes per 90', y=[ 'Forward passes per 90','Progressive passes per 90', 'Passes to final third per 90'], facet_col='variable',
@@ -315,16 +295,7 @@ if position == 'CM':
                         annotation.text = annotation.text.split('=')[1]
     st.plotly_chart(fig)
     
-    #st.plotly_chart(fig)
-    # Ensure 'League Two Average' is included in the list of selected players
-    # if 'League Two Average' not in players:
-    #     players.append('League Two Average')
-
-    # pizza_fig=create_pizza_plot(df_filtered, players_CM, categories=['Accurate forward passes, %', 'Accurate passes to final third, %', 'Accurate passes, %',
-    #                     'Accurate progressive passes, %','Aerial duels won, %'], title='Pizza Plot for Selected Players')
-
-    # Create radar chart for selected players
-    # st.write(f"Hover Text: {hovertext}")
+   
     df_position2=df_filtered.drop(columns=['CM Score(0-100)', 'CM zscore','Player Rank','Age','Team', 'Matches played', 'Minutes played'])
                               
     radar_fig =create_radar_chart(df_position2, players_CM, id_column='Player', title=f'Radar Chart for Selected {position} Players and League Average')
@@ -405,7 +376,7 @@ if position == 'CM':
                   )
 
         # Loading document through loader
-            loader = CSVLoader("CM_ElginFC.csv", encoding="windows-1252")
+            loader = CSVLoader("CM_Target.csv", encoding="windows-1252")
             docs = loader.load()
         # st.write("Documents loaded successfully.")
   
@@ -594,7 +565,7 @@ elif position == 'CB':
                   )
 
         # Loading document through loader
-            loader = CSVLoader("CB_ElginFC.csv", encoding="windows-1252")
+            loader = CSVLoader("CB_Target.csv", encoding="windows-1252")
             docs = loader.load()
         # st.write("Documents loaded successfully.")
   
@@ -844,7 +815,7 @@ elif position == 'Winger':
                   )
 
         # Loading document through loader
-            loader = CSVLoader("Wing_ElginFC.csv", encoding="windows-1252")
+            loader = CSVLoader("Wing_Target.csv", encoding="windows-1252")
             docs = loader.load()
         # st.write("Documents loaded successfully.")
   
@@ -1049,7 +1020,7 @@ elif position == 'CF':
                   )
 
         # Loading document through loader
-            loader = CSVLoader("CF_ElginFC.csv", encoding="windows-1252")
+            loader = CSVLoader("CF_Target.csv", encoding="windows-1252")
             docs = loader.load()
         # st.write("Documents loaded successfully.")
   
@@ -1274,7 +1245,7 @@ elif position == 'GK':
                   )
 
         # Loading document through loader
-            loader = CSVLoader("GK_ElginFC.csv", encoding="windows-1252")
+            loader = CSVLoader("GK_Target.csv", encoding="windows-1252")
             docs = loader.load()
         # st.write("Documents loaded successfully.")
   
@@ -1489,7 +1460,7 @@ elif position == 'FB':
                   )
 
         # Loading document through loader
-            loader = CSVLoader("FB_ElginFC.csv", encoding="windows-1252")
+            loader = CSVLoader("FB_Target.csv", encoding="windows-1252")
             docs = loader.load()
         # st.write("Documents loaded successfully.")
   
