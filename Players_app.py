@@ -1182,7 +1182,7 @@ elif position == 'GK':
     
     
     
-    fig2 = px.scatter(df_filtered.reset_index(), x='Conceded goals per 90', y='Save rate, %',
+    fig2 = px.scatter(df_filtered.reset_index(), x='xG against per 90', y='Save rate, %',
                      color='Player', title=f'{position} Saving Strength')
     
     
