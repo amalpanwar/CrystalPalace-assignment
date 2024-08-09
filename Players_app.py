@@ -298,14 +298,14 @@ if position == 'CM':
     fig = px.scatter(df_filtered.reset_index(), x='Passes per 90', y=[ 'Forward passes per 90','Progressive passes per 90', 'Passes to final third per 90'], facet_col='variable',
                                 color='Player',title='Passing threats')
     # Get facet names
-    facet_names = fig.layout['facet_col'].values
+    # facet_names = fig.layout['facet_col'].values
 
 # Add horizontal and vertical lines for each facet
-    for facet_name in facet_names:
+    for facet_name in league_avg_values.keys():
         league_avg = league_avg_values[facet_name]
 
     # Find the facet's index
-        facet_index = list(facet_names).index(facet_name) + 1
+        # facet_index = list(facet_names).index(facet_name) + 1
 
     # Add horizontal line
         fig.add_shape(
@@ -315,8 +315,8 @@ if position == 'CM':
             y0=league_avg,
             x1=1,
             y1=league_avg,
-            xref=f'x{facet_index}',
-            yref=f'y{facet_index}',
+            xref='paper',
+            yref='y',
             line=dict(color='red', width=2, dash='dash')
             )
             )
@@ -329,8 +329,8 @@ if position == 'CM':
             y0=0,
             x1=league_avg,
             y1=1,
-            xref=f'x{facet_index}',
-            yref=f'y{facet_index}',
+            xref='x',
+            yref='paper',
             line=dict(color='blue', width=2, dash='dash')
               )
               )
