@@ -309,7 +309,7 @@ if position == 'CM':
     
 
 # Add horizontal and vertical lines for each facet
-    for facet_name in ['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90']:
+    for i, facet_name in enumerate(['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90']):
         fig.add_shape(
         go.layout.Shape(
             type='line',
@@ -317,8 +317,8 @@ if position == 'CM':
             y0=league_avg_values[facet_name],
             x1=1,
             y1=league_avg_values[facet_name],
-            xref='paper',
-            yref='y',
+            xref=f'x{i+1}',
+            yref=f'y{i+1}',
             line=dict(color='red', width=2, dash='dash')
               )
           
@@ -332,8 +332,8 @@ if position == 'CM':
             y0=0,
             x1=league_avg_values['Passes per 90'],
             y1=y_max_values[facet_name],
-            xref='x',
-            yref='y',
+            xref=f'x{i+1}',
+            yref=f'y{i+1}',
             line=dict(color='blue', width=2, dash='dash')
              )
               
