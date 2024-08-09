@@ -287,6 +287,25 @@ if position == 'CM':
     
     fig = px.scatter(df_filtered.reset_index(), x='Passes per 90', y=[ 'Forward passes per 90','Progressive passes per 90', 'Passes to final third per 90'], facet_col='variable',
                                 color='Player',title='Passing threats')
+    for axis in fig.select_axes():
+    # Get the current axis limits
+    x_min, x_max = axis.range_x
+    y_min, y_max = axis.range_y
+
+    # Add vertical and horizontal lines to divide into quadrants
+    fig.add_shape(go.layout.Shape(
+        type='line', 
+        x0=(x_min + x_max) / 2, x1=(x_min + x_max) / 2, 
+        y0=y_min, y1=y_max,
+        line=dict(color='gray', dash='dash')
+    ), row=axis.row, col=axis.col)
+
+    fig.add_shape(go.layout.Shape(
+        type='line', 
+        x0=x_min, x1=x_max, 
+        y0=(y_min + y_max) / 2, y1=(y_min + y_max) / 2,
+        line=dict(color='gray', dash='dash')
+    ), row=axis.row, col=axis.col)
 
     fig.update_traces(textposition='top center')
     fig.update_traces(marker=dict(size=8))
