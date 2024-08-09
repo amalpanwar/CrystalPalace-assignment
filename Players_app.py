@@ -339,7 +339,7 @@ if position == 'CM':
     fig2.update_traces(textposition='top center')
     fig2.update_traces(marker=dict(size=8))
 
-    fig22 = px.scatter(df_filtered2, x='Key passes per 90',y='Interceptions per 90'',
+    fig22 = px.scatter(df_filtered2, x='Key passes per 90',y='Interceptions per 90',
                      color='Player', title=f'{position} Attack vs Defensive ability')
   
     fig22.update_traces(textposition='top center')
