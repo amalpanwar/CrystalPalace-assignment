@@ -315,7 +315,7 @@ if position == 'CM':
             type='line',
             x0=0,
             y0=league_avg_values[facet_name],
-            x1=x_max,
+            x1=x_max[facet_name],
             y1=league_avg_values[facet_name],
             xref='paper',
             yref='y',
@@ -333,7 +333,7 @@ if position == 'CM':
             x1=league_avg_values['Passes per 90'],
             y1=y_max_values[facet_name],
             xref='x',
-            yref='paper',
+            yref='y',
             line=dict(color='blue', width=2, dash='dash')
              ),
               row=1, col=1
