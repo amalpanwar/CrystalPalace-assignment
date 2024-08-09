@@ -344,7 +344,7 @@ if position == 'CM':
   
     fig22.update_traces(textposition='top center')
     fig22.update_traces(marker=dict(size=8))
-    col1, col2 = st.columns([1.5, 1])
+    col1, col2 = st.columns([1, 1])
     with col1:
         st.plotly_chart(fig2)
     with col2:
