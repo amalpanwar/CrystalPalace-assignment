@@ -320,8 +320,8 @@ if position == 'CM':
             xref='paper',
             yref='y',
             line=dict(color='red', width=2, dash='dash')
-              ),
-          row=1, col=1
+              )
+          
            )
 
     # Add vertical line
@@ -335,8 +335,8 @@ if position == 'CM':
             xref='x',
             yref='y',
             line=dict(color='blue', width=2, dash='dash')
-             ),
-              row=1, col=1
+             )
+              
               )
 
     fig.update_traces(textposition='top center')
