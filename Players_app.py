@@ -317,7 +317,7 @@ if position == 'CM':
                 y0=league_avg,
                 x1=1,
                 y1=league_avg,
-                xref='paper',
+                xref=facet_x,
                 yref='y',
                 line=dict(color='red', width=2, dash='dash')
                    )
@@ -332,7 +332,7 @@ if position == 'CM':
                 x1=league_avg,
                 y1=1,
                 xref='x',
-                yref='paper',
+                yref=facet_y,
                 line=dict(color='blue', width=2, dash='dash')
                )
                  )
