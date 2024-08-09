@@ -333,15 +333,24 @@ if position == 'CM':
     df_filtered2 = df_filtered.reset_index()
     df_filtered2['Assists per 90'] = ((df_filtered2['Assists'] / df_filtered2['Minutes played']) * 90).round(2)
     
-    fig2 = px.scatter(df_filtered2, x='Key passes per 90',y=[ 'Assists per 90','Interceptions per 90'], facet_col='variable',
+    fig2 = px.scatter(df_filtered2, x='Key passes per 90',y='Assists per 90',
                      color='Player', title=f'{position} Progression ability')
   
     fig2.update_traces(textposition='top center')
     fig2.update_traces(marker=dict(size=8))
-    for annotation in fig2.layout.annotations:
-             if 'variable=' in annotation.text:
-                        annotation.text = annotation.text.split('=')[1]
-    st.plotly_chart(fig2)
+
+    fig22 = px.scatter(df_filtered2, x='Key passes per 90',y='Interceptions per 90'',
+                     color='Player', title=f'{position} Attack vs Defensive ability')
+  
+    fig22.update_traces(textposition='top center')
+    fig22.update_traces(marker=dict(size=8))
+    col1, col2 = st.columns([1.5, 1])
+    with col1:
+        st.plotly_chart(fig2)
+    with col2:
+        st.plotly_chart(fig22)
+    
+    
 
 
     # df_filtered2 = df_filtered.reset_index()
@@ -355,15 +364,11 @@ if position == 'CM':
     df_melted = df_filtered3.melt(id_vars='Player', value_vars=['Aerial duels per 90', 'Aerial duels won per 90'], var_name='Metric', value_name='Value')
 
     # Create stacked bar chart
-    fig3 = px.bar(df_melted, x='Player', y='Value', color='Metric', title=f'{position} Aerial ability (Stacked)')
+    fig3 = px.bar(df_melted, x='Player', y='Value', color='Metric',orientation='h', title=f'{position} Aerial ability (Stacked)')
     st.plotly_chart(fig3)
     
 
-    # col1, col2 = st.columns([1.5, 1])
-    # with col1:
-    #     st.plotly_chart(fig2)
-    # with col2:
-    #     st.plotly_chart(fig3)
+   
     #Input field for user prompt
    
     if not AI21_api_key or not api_token:
