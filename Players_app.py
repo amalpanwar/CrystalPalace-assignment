@@ -297,22 +297,43 @@ if position == 'CM':
     
     fig = px.scatter(df_filtered.reset_index(), x='Passes per 90', y=[ 'Forward passes per 90','Progressive passes per 90', 'Passes to final third per 90'], facet_col='variable',
                                 color='Player',title='Passing threats')
-    for facet_name in league_avg_values.keys():
+    # Get facet names
+    facet_names = fig.layout['facet_col'].values
+
+# Add horizontal and vertical lines for each facet
+    for facet_name in facet_names:
         league_avg = league_avg_values[facet_name]
-    
-    # Add horizontal line for the current facet
-        fig.add_hline(
-        y=league_avg,
-        line=dict(color='red', width=2, dash='dash'),
-        row=1, col=list(df_filtered_new.columns).index(facet_name) + 1
-          )
-    
-    # Add vertical line for the current facet
-        fig.add_vline(
-        x=league_avg,
-        line=dict(color='blue', width=2, dash='dash'),
-        row=1, col=list(df_filtered_new.columns).index(facet_name) + 1
-             )
+
+    # Find the facet's index
+        facet_index = list(facet_names).index(facet_name) + 1
+
+    # Add horizontal line
+        fig.add_shape(
+        go.layout.Shape(
+            type='line',
+            x0=0,
+            y0=league_avg,
+            x1=1,
+            y1=league_avg,
+            xref=f'x{facet_index}',
+            yref=f'y{facet_index}',
+            line=dict(color='red', width=2, dash='dash')
+            )
+            )
+
+    # Add vertical line
+        fig.add_shape(
+        go.layout.Shape(
+            type='line',
+            x0=league_avg,
+            y0=0,
+            x1=league_avg,
+            y1=1,
+            xref=f'x{facet_index}',
+            yref=f'y{facet_index}',
+            line=dict(color='blue', width=2, dash='dash')
+              )
+              )
 
     fig.update_traces(textposition='top center')
     fig.update_traces(marker=dict(size=8))
