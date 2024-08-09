@@ -983,7 +983,7 @@ elif position == 'CF':
     
     
     
-    fig2 = px.scatter(df_filtered2, x='Touches in box per 90', y=['xG per 90','Goals per 90','Fouls suffered per 90'],facet_col='variable',
+    fig2 = px.scatter(df_filtered2, x='Touches in box per 90', y=['xG per 90','Goals per 90','Received long passes per 90'],facet_col='variable',
                   color='Player',title=f'{position} Touches in box vs Goal threat vs Foul suffered')
   
     fig2.update_traces(textposition='top center')
