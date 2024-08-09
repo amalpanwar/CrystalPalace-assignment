@@ -303,18 +303,12 @@ if position == 'CM':
 
 # Add horizontal and vertical lines for each facet
     for facet_name in ['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90']:
+        # Get the axis objects
+        facet_x = fig.data[i*2]['xaxis']
+        facet_y = fig.data[i*2]['yaxis']
+
+    # Calculate the league average for this facet
         league_avg = league_avg_values[facet_name]
-    
-    # Update each facet with horizontal and vertical lines
-        for facet in fig.select_facets():
-            facet.update_xaxes(
-            rangeslider_visible=False,
-            title_text='Passes per 90'
-                   )
-            facet.update_yaxes(
-            rangeslider_visible=False,
-            title_text=facet_name
-                    )
 
         # Add horizontal line
             facet.add_shape(
