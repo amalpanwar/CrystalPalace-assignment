@@ -294,6 +294,13 @@ if position == 'CM':
     'Progressive passes per 90': league_avg_row['Progressive passes per 90'].values[0],
     'Passes to final third per 90': league_avg_row['Passes to final third per 90'].values[0]
       }
+
+    x_max = df_filtered_new['Passes per 90'].max()
+    y_max_values = {
+    'Forward passes per 90': df_filtered_new['Forward passes per 90'].max(),
+    'Progressive passes per 90': df_filtered_new['Progressive passes per 90'].max(),
+    'Passes to final third per 90': df_filtered_new['Passes to final third per 90'].max()
+           }
    
     
     fig = px.scatter(df_filtered.reset_index(), x='Passes per 90', y=[ 'Forward passes per 90','Progressive passes per 90', 'Passes to final third per 90'], facet_col='variable',
@@ -308,7 +315,7 @@ if position == 'CM':
             type='line',
             x0=0,
             y0=league_avg_values[facet_name],
-            x1=1,
+            x1=x_max,
             y1=league_avg_values[facet_name],
             xref='paper',
             yref='y',
@@ -324,7 +331,7 @@ if position == 'CM':
             x0=league_avg_values['Passes per 90'],
             y0=0,
             x1=league_avg_values['Passes per 90'],
-            y1=1,
+            y1=y_max_values,
             xref='x',
             yref='paper',
             line=dict(color='blue', width=2, dash='dash')
