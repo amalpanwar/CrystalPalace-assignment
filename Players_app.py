@@ -144,8 +144,8 @@ def create_radar_chart(df, players, id_column, title=None, max_values=None, padd
                 ticks="",
                 showline=True,
                 showgrid=True,
-                gridcolor='gray',
-                gridwidth=0.5,
+                gridcolor='red',
+                gridwidth=1,
             ),
             angularaxis=dict(
                 tickvals=list(range(len(categories))),
@@ -157,7 +157,7 @@ def create_radar_chart(df, players, id_column, title=None, max_values=None, padd
                 showline=True,
                 showgrid=True,
                 gridcolor='gray',
-                gridwidth=0.5,
+                gridwidth=1,
                 
                 tickfont=dict(size=8, color='white'),
             ),
@@ -168,7 +168,7 @@ def create_radar_chart(df, players, id_column, title=None, max_values=None, padd
         ),
         width=1000,  # Increased width for better clarity
         height=300,  # Increased height for better clarity
-        margin=dict(l=100, r=125, t=18, b=0),  # Increased bottom margin to accommodate the legend
+        margin=dict(l=100, r=125, t=20, b=0),  # Increased bottom margin to accommodate the legend
         paper_bgcolor='black',  # Background color
         plot_bgcolor='white',    # Plot area background color
         legend=dict(
