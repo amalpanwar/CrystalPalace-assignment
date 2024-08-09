@@ -289,6 +289,7 @@ if position == 'CM':
 
 # Extract league average values
     league_avg_values = {
+    'Passes per 90': league_avg_row['Passes per 90'].values[0],
     'Forward passes per 90': league_avg_row['Forward passes per 90'].values[0],
     'Progressive passes per 90': league_avg_row['Progressive passes per 90'].values[0],
     'Passes to final third per 90': league_avg_row['Passes to final third per 90'].values[0]
@@ -301,39 +302,47 @@ if position == 'CM':
     
 
 # Add horizontal and vertical lines for each facet
-    for facet_name in league_avg_values.keys():
+    for facet_name in ['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90']:
         league_avg = league_avg_values[facet_name]
+    
+    # Update each facet with horizontal and vertical lines
+        for facet in fig.select_facets():
+            facet.update_xaxes(
+            rangeslider_visible=False,
+            title_text='Passes per 90'
+                   )
+            facet.update_yaxes(
+            rangeslider_visible=False,
+            title_text=facet_name
+                    )
 
-    # Find the facet's index
-        # facet_index = list(facet_names).index(facet_name) + 1
+        # Add horizontal line
+           facet.add_shape(
+            go.layout.Shape(
+                type='line',
+                x0=0,
+                y0=league_avg,
+                x1=1,
+                y1=league_avg,
+                xref='paper',
+                yref='y',
+                line=dict(color='red', width=2, dash='dash')
+                   )
+                  )
 
-    # Add horizontal line
-        fig.add_shape(
-        go.layout.Shape(
-            type='line',
-            x0=0,
-            y0=league_avg,
-            x1=1,
-            y1=league_avg,
-            xref='paper',
-            yref='y',
-            line=dict(color='red', width=2, dash='dash')
-            )
-            )
-
-    # Add vertical line
-        fig.add_shape(
-        go.layout.Shape(
-            type='line',
-            x0=league_avg,
-            y0=0,
-            x1=league_avg,
-            y1=1,
-            xref='x',
-            yref='paper',
-            line=dict(color='blue', width=2, dash='dash')
-              )
-              )
+        # Add vertical line
+          facet.add_shape(
+            go.layout.Shape(
+                type='line',
+                x0=league_avg,
+                y0=0,
+                x1=league_avg,
+                y1=1,
+                xref='x',
+                yref='paper',
+                line=dict(color='blue', width=2, dash='dash')
+               )
+                 )
 
     fig.update_traces(textposition='top center')
     fig.update_traces(marker=dict(size=8))
