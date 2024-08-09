@@ -333,11 +333,16 @@ if position == 'CM':
     df_filtered2 = df_filtered.reset_index()
     df_filtered2['Assists per 90'] = ((df_filtered2['Assists'] / df_filtered2['Minutes played']) * 90).round(2)
     
-    fig2 = px.scatter(df_filtered2, x='Key passes per 90', y='Assists per 90',
+    fig2 = px.scatter(df_filtered2, x='Key passes per 90',y=[ 'Assists per 90','Interceptions per 90'], facet_col='variable',
                      color='Player', title=f'{position} Progression ability')
   
     fig2.update_traces(textposition='top center')
     fig2.update_traces(marker=dict(size=8))
+    for annotation in fig2.layout.annotations:
+             if 'variable=' in annotation.text:
+                        annotation.text = annotation.text.split('=')[1]
+    st.plotly_chart(fig2)
+
 
     # df_filtered2 = df_filtered.reset_index()
     
@@ -351,14 +356,15 @@ if position == 'CM':
 
     # Create stacked bar chart
     fig3 = px.bar(df_melted, x='Player', y='Value', color='Metric', title=f'{position} Aerial ability (Stacked)')
+    st.plotly_chart(fig3)
     
 
-    col1, col2 = st.columns([1.5, 1])
-    with col1:
-        st.plotly_chart(fig2)
-    with col2:
-        st.plotly_chart(fig3)
-    # Input field for user prompt
+    # col1, col2 = st.columns([1.5, 1])
+    # with col1:
+    #     st.plotly_chart(fig2)
+    # with col2:
+    #     st.plotly_chart(fig3)
+    #Input field for user prompt
    
     if not AI21_api_key or not api_token:
         st.error("Please provide both the TOGETHER API Key and the API Key.")
