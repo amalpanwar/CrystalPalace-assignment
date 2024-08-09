@@ -282,10 +282,37 @@ if position == 'CM':
 
     # players_CB = st.sidebar.multiselect('Select players:', options=df_position.index.tolist(), default=['League Two Average'])
     df_filtered = df_position.loc[players_CM]
+
+    
+    league_avg_row = df_filtered[df_filtered['Player'] == 'League Two Average']
+
+# Extract league average values
+    league_avg_values = {
+    'Forward passes per 90': league_avg_row['Forward passes per 90'].values[0],
+    'Progressive passes per 90': league_avg_row['Progressive passes per 90'].values[0],
+    'Passes to final third per 90': league_avg_row['Passes to final third per 90'].values[0]
+      }
    
     
     fig = px.scatter(df_filtered.reset_index(), x='Passes per 90', y=[ 'Forward passes per 90','Progressive passes per 90', 'Passes to final third per 90'], facet_col='variable',
                                 color='Player',title='Passing threats')
+    for facet_name in league_avg_values.keys():
+        league_avg = league_avg_values[facet_name]
+    
+    # Get the facet index
+        facet_index = fig.layout.facet_col[0].values.index(facet_name)
+    
+    # Add horizontal and vertical lines
+        fig.add_hline(
+        y=league_avg,
+        row=1, col=facet_index+1,
+        line=dict(color='red', width=2, dash='dash')
+         )
+        fig.add_vline(
+        x=league_avg,
+        row=1, col=facet_index+1,
+        line=dict(color='blue', width=2, dash='dash')
+           )
 
     fig.update_traces(textposition='top center')
     fig.update_traces(marker=dict(size=8))
