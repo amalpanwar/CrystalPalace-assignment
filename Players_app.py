@@ -302,8 +302,7 @@ if position == 'CM':
     
 
 # Add horizontal and vertical lines for each facet
-    for facet_name in ['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90']:
-        # Get the axis objects
+    for i, facet_name in enumerate(['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90']):
         facet_x = fig.data[i*2]['xaxis']
         facet_y = fig.data[i*2]['yaxis']
 
