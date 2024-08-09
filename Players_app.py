@@ -144,7 +144,7 @@ def create_radar_chart(df, players, id_column, title=None, max_values=None, padd
                 ticks="",
                 showline=True,
                 showgrid=True,
-                gridcolor='light grey',
+                gridcolor='light gray',
                 gridwidth=1,
             ),
             angularaxis=dict(
@@ -156,7 +156,7 @@ def create_radar_chart(df, players, id_column, title=None, max_values=None, padd
                 ticks="",
                 showline=True,
                 showgrid=True,
-                gridcolor='gray',
+                gridcolor='light gray',
                 gridwidth=1,
                 
                 tickfont=dict(size=8, color='white'),
