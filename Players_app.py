@@ -358,7 +358,7 @@ if position == 'CM':
 
     df_filtered2['Aerial duels won per 90'] = df_filtered2['Aerial duels per 90'] * (df_filtered2['Aerial duels won, %'] / 100)
 
-    df_filtered3 = df_filtered2.sort_values(by='Aerial duels won per 90', ascending=False)
+    df_filtered3 = df_filtered2.sort_values(by='Aerial duels per 90', ascending=False)
 
     # Melt the dataframe to long format for stacking
     df_melted = df_filtered3.melt(id_vars='Player', value_vars=['Aerial duels per 90', 'Aerial duels won per 90'], var_name='Metric', value_name='Value')
@@ -467,12 +467,7 @@ elif position == 'CB':
     df_position["Defender Score(0-100)"] = (norm.cdf(df_position["defensive zscore"]) * 100).round(2)
     df_position['Player Rank'] = df_position['Defender Score(0-100)'].rank(ascending=False)
 
-    # df_position["defensive zscore"] = np.dot(df_position[original_metrics], weights)
-    # original_mean = df_position["defensive zscore"].mean()
-    # original_std = df_position["defensive zscore"].std()
-    # df_position["defensive zscore"] = (df_position["defensive zscore"] - original_mean) / original_std
-    # df_position["Defender Score(0-100)"] = (norm.cdf(df_position["defensive zscore"]) * 100).round(2)
-    # df_position['Player Rank'] = df_position['Defender Score(0-100)'].rank(ascending=False)
+    
     # Dropdown menu for player selection based on position
     if st.sidebar.button('Show Top 5 Players'):
         top_5_players = df_position.nsmallest(5, 'Player Rank').index.tolist()
