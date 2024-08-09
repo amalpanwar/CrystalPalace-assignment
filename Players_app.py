@@ -298,7 +298,7 @@ if position == 'CM':
     fig = px.scatter(df_filtered.reset_index(), x='Passes per 90', y=[ 'Forward passes per 90','Progressive passes per 90', 'Passes to final third per 90'], facet_col='variable',
                                 color='Player',title='Passing threats')
     # Get facet names
-    # facet_names = fig.layout['facet_col'].values
+    
 
 # Add horizontal and vertical lines for each facet
     for facet_name in league_avg_values.keys():
