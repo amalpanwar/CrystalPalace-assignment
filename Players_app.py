@@ -302,40 +302,35 @@ if position == 'CM':
     
 
 # Add horizontal and vertical lines for each facet
-    for i, facet_name in enumerate(['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90']):
-        facet_x = fig.data[i*2]['xaxis']
-        facet_y = fig.data[i*2]['yaxis']
-
-    # Calculate the league average for this facet
-        league_avg = league_avg_values[facet_name]
-
-        # Add horizontal line
+    for facet_name in ['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90']:
         fig.add_shape(
-            go.layout.Shape(
-                type='line',
-                x0=0,
-                y0=league_avg,
-                x1=1,
-                y1=league_avg,
-                xref=facet_x,
-                yref='y',
-                line=dict(color='red', width=2, dash='dash')
-                   )
-                  )
+        go.layout.Shape(
+            type='line',
+            x0=0,
+            y0=league_avg_values[facet_name],
+            x1=1,
+            y1=league_avg_values[facet_name],
+            xref='paper',
+            yref='y',
+            line=dict(color='red', width=2, dash='dash')
+              ),
+          row=1, col=1
+           )
 
-        # Add vertical line
+    # Add vertical line
         fig.add_shape(
-            go.layout.Shape(
-                type='line',
-                x0=league_avg,
-                y0=0,
-                x1=league_avg,
-                y1=1,
-                xref='x',
-                yref=facet_y,
-                line=dict(color='blue', width=2, dash='dash')
-               )
-                 )
+        go.layout.Shape(
+            type='line',
+            x0=league_avg_values['Passes per 90'],
+            y0=0,
+            x1=league_avg_values['Passes per 90'],
+            y1=1,
+            xref='x',
+            yref='paper',
+            line=dict(color='blue', width=2, dash='dash')
+             ),
+              row=1, col=1
+              )
 
     fig.update_traces(textposition='top center')
     fig.update_traces(marker=dict(size=8))
