@@ -300,20 +300,19 @@ if position == 'CM':
     for facet_name in league_avg_values.keys():
         league_avg = league_avg_values[facet_name]
     
-    # Get the facet index
-        facet_index = fig.layout.facet_col[0].values.index(facet_name)
-    
-    # Add horizontal and vertical lines
+    # Add horizontal line for the current facet
         fig.add_hline(
         y=league_avg,
-        row=1, col=facet_index+1,
-        line=dict(color='red', width=2, dash='dash')
-         )
+        line=dict(color='red', width=2, dash='dash'),
+        row=1, col=list(df_filtered.columns).index(facet_name) + 1
+          )
+    
+    # Add vertical line for the current facet
         fig.add_vline(
         x=league_avg,
-        row=1, col=facet_index+1,
-        line=dict(color='blue', width=2, dash='dash')
-           )
+        line=dict(color='blue', width=2, dash='dash'),
+        row=1, col=list(df_filtered.columns).index(facet_name) + 1
+             )
 
     fig.update_traces(textposition='top center')
     fig.update_traces(marker=dict(size=8))
