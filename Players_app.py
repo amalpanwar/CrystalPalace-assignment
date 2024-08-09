@@ -364,7 +364,7 @@ if position == 'CM':
     df_melted = df_filtered3.melt(id_vars='Player', value_vars=['Aerial duels per 90', 'Aerial duels won per 90'], var_name='Metric', value_name='Value')
 
     # Create stacked bar chart
-    fig3 = px.bar(df_melted, x='Player', y='Value', color='Metric',orientation='h', title=f'{position} Aerial ability (Stacked)')
+    fig3 = px.bar(df_melted, x='Value', y='Player', color='Metric',orientation='h', title=f'{position} Aerial ability (Stacked)')
     st.plotly_chart(fig3)
     
 
