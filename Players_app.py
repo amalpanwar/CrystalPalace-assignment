@@ -310,7 +310,7 @@ if position == 'CM':
         league_avg = league_avg_values[facet_name]
 
         # Add horizontal line
-            facet.add_shape(
+        facet.add_shape(
             go.layout.Shape(
                 type='line',
                 x0=0,
@@ -324,7 +324,7 @@ if position == 'CM':
                   )
 
         # Add vertical line
-            facet.add_shape(
+        facet.add_shape(
             go.layout.Shape(
                 type='line',
                 x0=league_avg,
