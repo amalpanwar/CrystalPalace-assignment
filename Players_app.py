@@ -284,10 +284,10 @@ if position == 'CM':
     df_filtered = df_position.loc[players_CM]
    
     
-    df_long = df_filtered.melt(id_vars=['Player', 'Passes per 90'], 
+    df_long = df_filtered.reset_index().melt(id_vars=['Player', 'Passes per 90'], 
                    value_vars=['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90'],
                    var_name='variable', value_name='value')
-    fig = px.scatter(df_long.reset_index(), x='Passes per 90', y='value', color='Player',
+    fig = px.scatter(df_long, x='Passes per 90', y='value', color='Player',
                  facet_col='variable', facet_col_wrap=3, 
                  title='Passing Threats')
     for axis in fig.select_xaxes():
