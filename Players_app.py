@@ -304,14 +304,14 @@ if position == 'CM':
         fig.add_hline(
         y=league_avg,
         line=dict(color='red', width=2, dash='dash'),
-        row=1, col=list(df_filtered.columns).index(facet_name) + 1
+        row=1, col=list(df_filtered_new.columns).index(facet_name) + 1
           )
     
     # Add vertical line for the current facet
         fig.add_vline(
         x=league_avg,
         line=dict(color='blue', width=2, dash='dash'),
-        row=1, col=list(df_filtered.columns).index(facet_name) + 1
+        row=1, col=list(df_filtered_new.columns).index(facet_name) + 1
              )
 
     fig.update_traces(textposition='top center')
