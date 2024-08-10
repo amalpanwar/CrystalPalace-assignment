@@ -400,7 +400,7 @@ if position == 'CM':
     fig2.add_shape(
     go.layout.Shape(
         type='line',
-        x0=x_min,
+        x0=0,
         y0=league_avg_values2['Assists per 90'], 
         x1=x_max,
         y1=league_avg_values2['Assists per 90'],
@@ -412,7 +412,7 @@ if position == 'CM':
     go.layout.Shape(
         type='line',
         x0=league_avg_values2['Key passes per 90'], 
-        y0=y_min,
+        y0=0,
         x1=league_avg_values2['Key passes per 90'],
         y1=y_max,
         line=dict(color='red', width=2, dash='dash')
