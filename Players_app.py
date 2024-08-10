@@ -406,7 +406,7 @@ if position == 'CM':
         y0=league_avg_values2['Assists per 90'], 
         x1=x_max,
         y1=league_avg_values2['Assists per 90'],
-        line=dict(color='blue', width=2, dash='dash'),
+        line=dict(color='red', width=1, dash='dash'),
         xref='x',
         yref='y',
              )
@@ -419,7 +419,7 @@ if position == 'CM':
         y0=y_min,
         x1=league_avg_values2['Key passes per 90'],
         y1=y_max,
-        line=dict(color='red', width=2, dash='dash'),
+        line=dict(color='blue', width=1, dash='dash'),
         xref='x',
         yref='y',
               )
@@ -437,7 +437,7 @@ if position == 'CM':
         y0=league_avg_values2['Interceptions per 90'], 
         x1=x_max,
         y1=league_avg_values2['Interceptions per 90'],
-        line=dict(color='blue', width=2, dash='dash'),
+        line=dict(color='red', width=1, dash='dash'),
         xref='x',
         yref='y',
              )
@@ -450,7 +450,7 @@ if position == 'CM':
         y0=y_min_int,
         x1=league_avg_values2['Key passes per 90'],
         y1=y_max_int,
-        line=dict(color='red', width=2, dash='dash'),
+        line=dict(color='blue', width=1, dash='dash'),
         xref='x',
         yref='y',
               )
