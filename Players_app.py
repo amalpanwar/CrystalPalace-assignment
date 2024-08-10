@@ -316,11 +316,11 @@ if position == 'CM':
             type='line',
             x0=0,
             y0=league_avg_values[facet_name],
-            x1=x_max,
+            x1=1,
             y1=league_avg_values[facet_name],
             xref=f'x{i+1}',
             yref=f'y{i+1}',
-            line=dict(color='red', width=2, dash='dash')
+            line=dict(color='red', width=1, dash='dash')
               )
           
            )
@@ -331,11 +331,11 @@ if position == 'CM':
             type='line',
             x0=league_avg_values['Passes per 90'],
             y0=0,
-            x1=league_avg_values['Passes per 90'],
+            x1=x_max,
             y1=y_max,
             xref=f'x{i+1}',
             yref=f'y{i+1}',
-            line=dict(color='blue', width=2, dash='dash')
+            line=dict(color='blue', width=1, dash='dash')
              )
               
               )
