@@ -352,7 +352,7 @@ if position == 'CM':
                               
     radar_fig =create_radar_chart(df_position2, players_CM, id_column='Player', title=f'Radar Chart for Selected {position} Players and League Average')
     
-    columns_to_display = ['Player','Team','Age', 'Matches played', 'Minutes played', 'CM Score(0-100)', 'Player Rank']
+    columns_to_display = ['Player','Team','CM Score(0-100)', 'Player Rank','Age', 'Matches played', 'Minutes played' ]
     df_filtered_display=df_filtered.reset_index()
     df_filtered_display = df_filtered_display[columns_to_display].rename(columns={
       'CM Score(0-100)': 'Rating (0-100)',
