@@ -316,7 +316,7 @@ if position == 'CM':
             type='line',
             x0=0,
             y0=league_avg_values[facet_name],
-            x1=1,
+            x1=x_max,
             y1=league_avg_values[facet_name],
             xref=f'x{i+1}',
             yref=f'y{i+1}',
