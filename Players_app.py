@@ -397,10 +397,10 @@ if position == 'CM':
     fig2.add_shape(
     go.layout.Shape(
         type='line',
-        x0=league_avg_values2['Key passes per 90'],
-        y0=df_filtered2['Assists per 90'].min(),  # Start line at the min y value
-        x1=league_avg_values2['Key passes per 90'],
-        y1=df_filtered2['Assists per 90'].max(),  # End line at the max y value
+        x0=league_avg_values2['Assists per 90'],
+        y0=df_filtered2['Key passes per 90'].min(),  # Start line at the min y value
+        x1=league_avg_values2['Assists per 90'],
+        y1=df_filtered2['Key passes per 90'].max(),  # End line at the max y value
         line=dict(color='blue', width=2, dash='dash')
              )
              )
