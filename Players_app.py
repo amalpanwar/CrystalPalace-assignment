@@ -385,14 +385,15 @@ if position == 'CM':
     
     df_filtered2 = df_filtered.reset_index()
     df_filtered2['Assists per 90'] = ((df_filtered2['Assists'] / df_filtered2['Minutes played']) * 90).round(2)
-    league_avg_row['Assists per 90']=df_filtered2['Assists per 90']
+    df_filtered_new['Assists per 90']=((df_filtered_new['Assists'] / df_filtered_new['Minutes played']) * 90).round(2)
+    league_avg_row2 = df_filtered_new[df_filtered_new['Player'] == 'League Two Average']
     league_avg_values2 = {
-    'Key passes per 90': league_avg_row['Key passes per 90'].values[0],
-    'Assists per 90': league_avg_row['Assists per 90'].values[0],
-    'Interceptions per 90': league_avg_row['Interceptions per 90'].values[0],
+    'Key passes per 90': league_avg_row2['Key passes per 90'].values[0],
+    'Assists per 90': league_avg_row2['Assists per 90'].values[0],
+    'Interceptions per 90': league_avg_row2['Interceptions per 90'].values[0],
           }
-    x_min, x_max = df_filtered2['Key passes per 90'].min(), df_filtered2['Key passes per 90'].max()
-    y_min, y_max = df_filtered2['Assists per 90'].min(), df_filtered2['Assists per 90'].max()
+    x_min, x_max = df_filtered_new['Key passes per 90'].min(), df_filtered_new['Key passes per 90'].max()
+    y_min, y_max = df_filtered_new['Assists per 90'].min(), df_filtered_new['Assists per 90'].max()
 
     
     fig2 = px.scatter(df_filtered2, x='Key passes per 90',y='Assists per 90',
