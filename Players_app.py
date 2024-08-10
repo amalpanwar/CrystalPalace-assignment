@@ -232,7 +232,7 @@ api_token = st.sidebar.text_input('API Key', type='password')
 # Streamlit app
 st.title('Player Performance Dashboard')
 
-default_position_index = ["GK","FB","CB","CM","CAM","Winger","CF"].index('CM')
+default_position_index = ["GK","FB","CB","CM","Winger","CF"].index('CM')
 position = st.sidebar.selectbox('Select position:', options=["GK","FB","CB","CM","Winger","CF"],index=default_position_index)
 
 
@@ -381,12 +381,38 @@ if position == 'CM':
     with col2:
         st.write("Players Info:")
         st.dataframe(styled_df, use_container_width=True)
-
+        
+    league_avg_values = {
+    'Key passes per 90': league_avg_row['Key passes per 90'].values[0],
+    'Assists per 90': league_avg_row['Assists per 90'].values[0],
+    'Interceptions per 90': league_avg_row['Interceptions per 90'].values[0],
+          }
     df_filtered2 = df_filtered.reset_index()
     df_filtered2['Assists per 90'] = ((df_filtered2['Assists'] / df_filtered2['Minutes played']) * 90).round(2)
     
     fig2 = px.scatter(df_filtered2, x='Key passes per 90',y='Assists per 90',
                      color='Player', title=f'{position} Progression ability')
+    fig2.add_shape(
+    go.layout.Shape(
+        type='line',
+        x0=league_avg_values['Key passes per 90'],
+        y0=df_filtered2['Assists per 90'].min(),  # Start line at the min y value
+        x1=league_avg_values['Key passes per 90'],
+        y1=df_filtered2['Assists per 90'].max(),  # End line at the max y value
+        line=dict(color='blue', width=2, dash='dash')
+             )
+             )
+
+    fig2.add_shape(
+    go.layout.Shape(
+        type='line',
+        x0=df_filtered2['Key passes per 90'].min(),  # Start line at the min x value
+        y0=league_avg_values['Assists per 90'],
+        x1=df_filtered2['Key passes per 90'].max(),  # End line at the max x value
+        y1=league_avg_values['Assists per 90'],
+        line=dict(color='red', width=2, dash='dash')
+              )
+           )
   
     fig2.update_traces(textposition='top center')
     fig2.update_traces(marker=dict(size=8))
