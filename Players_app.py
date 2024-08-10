@@ -394,6 +394,7 @@ if position == 'CM':
           }
     x_min, x_max = df_filtered_new['Key passes per 90'].min(), df_filtered_new['Key passes per 90'].max()
     y_min, y_max = df_filtered_new['Assists per 90'].min(), df_filtered_new['Assists per 90'].max()
+    y_min_int, y_max_int = df_filtered_new['Interceptions per 90'].min(), df_filtered_new['Interceptions per 90'].max()
 
     
     fig2 = px.scatter(df_filtered2, x='Key passes per 90',y='Assists per 90',
@@ -429,6 +430,31 @@ if position == 'CM':
 
     fig22 = px.scatter(df_filtered2, x='Key passes per 90',y='Interceptions per 90',
                      color='Player', title=f'{position} Attack vs Defensive ability')
+    fig2.add_shape(
+    go.layout.Shape(
+        type='line',
+        x0=x_min,
+        y0=league_avg_values2['Interceptions per 90'], 
+        x1=x_max,
+        y1=league_avg_values2['Interceptions per 90'],
+        line=dict(color='blue', width=2, dash='dash'),
+        xref='x',
+        yref='y',
+             )
+             )
+
+    fig2.add_shape(
+    go.layout.Shape(
+        type='line',
+        x0=league_avg_values2['Key passes per 90'], 
+        y0=y_min_int,
+        x1=league_avg_values2['Key passes per 90'],
+        y1=y_max_int,
+        line=dict(color='red', width=2, dash='dash'),
+        xref='x',
+        yref='y',
+              )
+           )
   
     fig22.update_traces(textposition='top center')
     fig22.update_traces(marker=dict(size=8))
