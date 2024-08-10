@@ -284,7 +284,7 @@ if position == 'CM':
     df_filtered = df_position.loc[players_CM]
 
     
-    df_filtered_new=df_filtered.reset_index()
+    df_filtered_new=df_position.reset_index()
     league_avg_row = df_filtered_new[df_filtered_new['Player'] == 'League Two Average']
 
 # Extract league average values
