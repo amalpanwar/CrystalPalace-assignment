@@ -391,16 +391,19 @@ if position == 'CM':
     'Assists per 90': league_avg_row['Assists per 90'].values[0],
     'Interceptions per 90': league_avg_row['Interceptions per 90'].values[0],
           }
+    x_min, x_max = df_filtered2['Key passes per 90'].min(), df_filtered2['Key passes per 90'].max()
+    y_min, y_max = df_filtered2['Assists per 90'].min(), df_filtered2['Assists per 90'].max()
+
     
     fig2 = px.scatter(df_filtered2, x='Key passes per 90',y='Assists per 90',
                      color='Player', title=f'{position} Progression ability')
     fig2.add_shape(
     go.layout.Shape(
         type='line',
-        x0=league_avg_values2['Assists per 90'],
-        y0=df_filtered2['Key passes per 90'].min(),  # Start line at the min y value
-        x1=league_avg_values2['Assists per 90'],
-        y1=df_filtered2['Key passes per 90'].max(),  # End line at the max y value
+        x0=x_min,
+        y0=league_avg_values['Assists per 90'],  # Start line at the min y value
+        x1=x_max,
+        y1=league_avg_values['Assists per 90'],  # End line at the max y value
         line=dict(color='blue', width=2, dash='dash')
              )
              )
@@ -408,10 +411,10 @@ if position == 'CM':
     fig2.add_shape(
     go.layout.Shape(
         type='line',
-        x0=df_filtered2['Assists per 90'].min(),  # Start line at the min x value
-        y0=league_avg_values2['Key passes per 90'],
-        x1=df_filtered2['Assists per 90'].max(),  # End line at the max x value
-        y1=league_avg_values2['Key passes per 90'],
+        x0=league_avg_values['Key passes per 90'],  # Start line at the min x value
+        y0=y_min,
+        x1=league_avg_values['Key passes per 90'],  # End line at the max x value
+        y1=y_max,
         line=dict(color='red', width=2, dash='dash')
               )
            )
