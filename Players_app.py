@@ -331,7 +331,7 @@ if position == 'CM':
             type='line',
             x0=league_avg_values['Passes per 90'],
             y0=0,
-            x1=x_max,
+            x1=league_avg_values['Passes per 90'],
             y1=y_max,
             xref=f'x{i+1}',
             yref=f'y{i+1}',
