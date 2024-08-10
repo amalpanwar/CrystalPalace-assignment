@@ -430,7 +430,7 @@ if position == 'CM':
 
     fig22 = px.scatter(df_filtered2, x='Key passes per 90',y='Interceptions per 90',
                      color='Player', title=f'{position} Attack vs Defensive ability')
-    fig2.add_shape(
+    fig22.add_shape(
     go.layout.Shape(
         type='line',
         x0=x_min,
@@ -443,7 +443,7 @@ if position == 'CM':
              )
              )
 
-    fig2.add_shape(
+    fig22.add_shape(
     go.layout.Shape(
         type='line',
         x0=league_avg_values2['Key passes per 90'], 
