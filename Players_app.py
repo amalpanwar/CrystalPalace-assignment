@@ -1,7 +1,7 @@
+# Import necessary libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import openpyxl
-# import distutils.core
 import seaborn as sns
 from scipy.stats import norm
 from math import pi
@@ -9,43 +9,26 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-#from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, AIMessage
 import getpass
 import os
-# from dotenv import load_dotenv
 from langchain import hub
-# from langchain.vectorstores import Chroma
-# from langchain_community.vectorstores import Chroma
 from langchain_community.vectorstores import FAISS
-# from chromadb import Chroma
-# from langchain_chroma import Chroma
-#from langchain_community.document_loaders import WebBaseLoader
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
-#from langchain_openai import OpenAIEmbeddings
-#from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceHubEmbeddings
-# from langchain_mistralai import ChatMistralAI
-# from langchain_together import ChatTogether
 from langchain_ai21 import ChatAI21
-#from unstructured.partition.xlsx import partition_xlsx
 import networkx as nx
-#import pandas as pd
 import json
 import bs4
-#from langchain_community.document_loaders.unstructured import UnstructuredFileLoader
 from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.document_loaders import CSVLoader
-# from langchain.document_loaders import CSVLoader
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import logging
-# import chromadb
-# import chromadb.config
 
 logging.basicConfig(level=logging.DEBUG)
 #import sqlite3
@@ -67,6 +50,7 @@ df_GK=pd.read_excel('CrystalP.xlsx', sheet_name='GK')
 df_FB=pd.read_excel('CrystalP.xlsx', sheet_name='FB')
 # df_FB.to_csv('FB_Target.csv', index=False)
 
+#Set first column as an index
 pvt_df_CM = pd.DataFrame(df_CM).set_index('Player')
 pvt_df_CB = pd.DataFrame(df_CB).set_index('Player')
 pvt_df_Wing = pd.DataFrame(df_Wing).set_index('Player')
@@ -75,9 +59,7 @@ pvt_df_CF = pd.DataFrame(df_CF).set_index('Player')
 pvt_df_GK = pd.DataFrame(df_GK).set_index('Player')
 pvt_df_FB = pd.DataFrame(df_FB).set_index('Player')
 
-# Pivot the dataframe
-# pivot_df = df.pivot(index='Player', columns='Attribute', values='Value')
-
+# Function to create radar chart
 def create_radar_chart(df, players, id_column, title=None, max_values=None, padding=1.25):
     df_selected = df.loc[players]
     categories = df_selected.columns.tolist()
@@ -100,8 +82,6 @@ def create_radar_chart(df, players, id_column, title=None, max_values=None, padd
     
     fig = go.Figure()
 
-    # color_map = {player: f'rgba({np.random.randint(256)},{np.random.randint(256)},{np.random.randint(256)})' for player in ids}
-
     for i, model_name in enumerate(ids):
         values = [normalized_data[key][i] for key in data.keys()]
         values += values[:1]  # Complete the circle
@@ -116,11 +96,7 @@ def create_radar_chart(df, players, id_column, title=None, max_values=None, padd
             name=model_name,
             hoverinfo='text',
             hovertext=hovertext
-            # line=dict(
-            #     color=color_map[model_name],
-            #     width=1
-            # ),
-            # showlegend=True
+           
         ))
 
 
@@ -138,8 +114,7 @@ def create_radar_chart(df, players, id_column, title=None, max_values=None, padd
             radialaxis=dict(
                 visible=True,
                 range=[0, 1],
-                # tickvals=[0, 0.5, 1],
-                # ticktext=['0', '0.5', '1'],
+            
                 showticklabels=False,
                 ticks="",
                 showline=True,
@@ -187,47 +162,10 @@ def create_radar_chart(df, players, id_column, title=None, max_values=None, padd
 
     return fig
 
-# def create_pizza_plot(df, players, categories, title, padding=1.25):
-#     N = len(categories)
-#     angles = np.linspace(0, 2 * pi, N, endpoint=False).tolist()
-#     angles_mids = np.linspace(0, 2 * pi, N, endpoint=False) + (angles[1] / 2)  # Complete the loop
 
-#     fig, ax = plt.subplots(figsize=(10, 8), subplot_kw=dict(polar=True))
-#     # ax = plt.subplot(111, polar=True)
-#     fig.patch.set_facecolor('black')  # Set figure background to black
-#     ax.set_facecolor('grey') 
-#     ax.set_theta_offset(pi / 2)
-#     ax.set_theta_direction(-1)
-#     ax.set_xticks(angles_mids)
-#     ax.set_xticklabels(categories, color='white', fontsize=14)
-#     # ax.xaxis.set_minor_locator(plt.FixedLocator(angles))
-
-#     # Draw ylabels
-#     ax.set_rlabel_position(0)
-#     ax.set_yticks([20, 40, 60, 80, 100])
-#     ax.set_yticklabels(["20", "40", "60", "80", "100"], color="white", size=8)
-#     ax.set_ylim(0, 100)
-#     width = angles[1] - angles[0]
-
-
-#     for player in players:
-#         values = df.loc[player, categories].values.flatten().tolist()
-#         ax.bar(angles_mids, values, width=width, alpha=0.5, edgecolor='k', linewidth=1,label=player)
-
-#     ax.grid(True, axis='x', which='minor')
-#     ax.grid(False, axis='x', which='major')
-#     ax.grid(True, axis='y', which='major')
-#     ax.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1), fontsize=14, facecolor='white', edgecolor='black', labelcolor='black')
-#     plt.title(title,color='white', fontsize=14)
-
-#     return fig
-# RAG Pipeline for Chatting
+# API key necessary for LLM model
 AI21_api_key = st.sidebar.text_input('Together API Key')
 api_token = st.sidebar.text_input('API Key', type='password')
-
-
-
-
 
 # Streamlit app
 st.title('Player Performance Dashboard')
@@ -235,11 +173,11 @@ st.title('Player Performance Dashboard')
 default_position_index = ["GK","FB","CB","CM","Winger","CF"].index('CM')
 position = st.sidebar.selectbox('Select position:', options=["GK","FB","CB","CM","Winger","CF"],index=default_position_index)
 
-
 # Ensure df_position is selected
 if position == 'CM':
     df_position = pvt_df_CM
 
+    # Assign weights to the metrics based on their importance
     original_metrics =[
        'Assists',
        'Successful defensive actions per 90', 'Aerial duels per 90',
@@ -294,7 +232,7 @@ if position == 'CM':
     'Progressive passes per 90': league_avg_row['Progressive passes per 90'].values[0],
     'Passes to final third per 90': league_avg_row['Passes to final third per 90'].values[0]
       }
-
+# get max value for X and Y to create quadrants
     x_max = df_filtered_new['Passes per 90'].max()
     y_max_values = {
     'Forward passes per 90': df_filtered_new['Forward passes per 90'].max(),
@@ -303,14 +241,16 @@ if position == 'CM':
            }
     y_max = max(y_max_values.values())
    
-    
+    # create Scatter plot
     fig = px.scatter(df_filtered.reset_index(), x='Passes per 90', y=[ 'Forward passes per 90','Progressive passes per 90', 'Passes to final third per 90'], facet_col='variable',
                                 color='Player',title='Passing threats')
-    # Get facet names
+    
     
 
-# Add horizontal and vertical lines for each facet
+# Add horizontal and vertical lines for each facet, this will provide the quadrant inside scatter plot
+    
     for i, facet_name in enumerate(['Forward passes per 90', 'Progressive passes per 90', 'Passes to final third per 90']):
+        # Add horizontal line
         fig.add_shape(
         go.layout.Shape(
             type='line',
@@ -347,11 +287,13 @@ if position == 'CM':
                         annotation.text = annotation.text.split('=')[1]
     st.plotly_chart(fig)
     
-   
+   # Dropping unnecessary column not require for radar chart
     df_position2=df_filtered.drop(columns=['CM Score(0-100)', 'CM zscore','Player Rank','Age','Team', 'Matches played', 'Minutes played'])
-                              
+
+    # Rdar chart
     radar_fig =create_radar_chart(df_position2, players_CM, id_column='Player', title=f'Radar Chart for Selected {position} Players and League Average')
-    
+
+    # Creating Player info table
     columns_to_display = ['Player','Team','CM Score(0-100)', 'Player Rank','Age', 'Matches played', 'Minutes played' ]
     df_filtered_display=df_filtered.reset_index()
     df_filtered_display = df_filtered_display[columns_to_display].rename(columns={
@@ -373,8 +315,7 @@ if position == 'CM':
     styled_df = style_dataframe(df_filtered_display)
 
 # Display styled DataFrame in Streamlit
-    # st.write("Players Info:")
-    # st.dataframe(styled_df, use_container_width=True)
+
     col1, col2 = st.columns(2)
     with col1:
         st.plotly_chart(radar_fig)
@@ -382,7 +323,7 @@ if position == 'CM':
         st.write("Players Info:")
         st.dataframe(styled_df, use_container_width=True)
         
-    
+   # Calculating Assit per 90 for slected player and for league average 
     df_filtered2 = df_filtered.reset_index()
     df_filtered2['Assists per 90'] = ((df_filtered2['Assists'] / df_filtered2['Minutes played']) * 90).round(2)
     df_filtered_new['Assists per 90']=((df_filtered_new['Assists'] / df_filtered_new['Minutes played']) * 90).round(2)
@@ -392,13 +333,16 @@ if position == 'CM':
     'Assists per 90': league_avg_row2['Assists per 90'].values[0],
     'Interceptions per 90': league_avg_row2['Interceptions per 90'].values[0],
           }
+
+    # calculate min, max for the quadrants
     x_min, x_max = df_filtered_new['Key passes per 90'].min(), df_filtered_new['Key passes per 90'].max()
     y_min, y_max = df_filtered_new['Assists per 90'].min(), df_filtered_new['Assists per 90'].max()
     y_min_int, y_max_int = df_filtered_new['Interceptions per 90'].min(), df_filtered_new['Interceptions per 90'].max()
 
-    
+    # creating scatter plot
     fig2 = px.scatter(df_filtered2, x='Key passes per 90',y='Assists per 90',
                      color='Player', title=f'{position} Progression ability')
+    # Adding quadrants
     fig2.add_shape(
     go.layout.Shape(
         type='line',
@@ -427,9 +371,10 @@ if position == 'CM':
   
     fig2.update_traces(textposition='top center')
     fig2.update_traces(marker=dict(size=8))
-
+#Create scatter plot
     fig22 = px.scatter(df_filtered2, x='Key passes per 90',y='Interceptions per 90',
                      color='Player', title=f'{position} Attack vs Defensive ability')
+    # Add quadrants
     fig22.add_shape(
     go.layout.Shape(
         type='line',
@@ -459,19 +404,17 @@ if position == 'CM':
     fig22.update_traces(textposition='top center')
     fig22.update_traces(marker=dict(size=8))
     col1, col2 = st.columns([1, 1])
+    # display visuals 
     with col1:
         st.plotly_chart(fig2)
     with col2:
         st.plotly_chart(fig22)
     
-    
-
-
-    # df_filtered2 = df_filtered.reset_index()
-    
+    # Calculate Aerial duel won per 90 
 
     df_filtered2['Aerial duels won per 90'] = df_filtered2['Aerial duels per 90'] * (df_filtered2['Aerial duels won, %'] / 100)
 
+ # sort the vlaues by Aerial duel per 90 CM involved.
     df_filtered3 = df_filtered2.sort_values(by='Aerial duels per 90', ascending=False)
 
     # Melt the dataframe to long format for stacking
@@ -483,10 +426,10 @@ if position == 'CM':
     
 
    
-    #Input field for user prompt
+    #create RAG pipeline by LLM modelling
    
     if not AI21_api_key or not api_token:
-        st.error("Please provide both the TOGETHER API Key and the API Key.")
+        st.error("Please provide both the AI21 API Key and the API Key.")
     else:
         try:
             # Initialize the LLM model
@@ -537,6 +480,8 @@ if position == 'CM':
 
             question_answer_chain = create_stuff_documents_chain(llm, prompt)
             rag_chain = create_retrieval_chain(retriever, question_answer_chain)
+
+            # Input field for user name
             user_prompt = st.text_input("Enter your query:")
             if user_prompt:
     # Get response from RAG chain
